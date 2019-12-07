@@ -13,17 +13,37 @@
     // les déclarations
 
 dec "INT"|"FLOAT"|"BOOL"
-const "CONST"
+chiffre[0-9]
+cst [1-9][0-9]*|0
+vide [ \t]+
+saut_ligne [\n]
 
     // les Nombres
-integer [-+]?([1-9][0-9]*|0)
-float [-+]?([1-9][0-9]*|0)\.[0-9]*[1-9]
+integer [- | +]?([1-9][0-9]*|0)
+float [- | +]?([1-9][0-9]*|0)\.[0-9]*[1-9]
 bool ("true"|"false"|"TRUE"|"FALSE")
+varint "INT" | "int"
+varfloat "FLOAT" | "float"
+varbool "bool" | "BOOL"
+const_int "const int"|"CONST INT"
+const_float "const float" | "CONST FLOAT"
+comment "{"[^}]*"}"
 
     // Déclarations des éléments du language
-idf [A-Z]([_]?[a-z0-9])*
+idf [A-Z]([_]?[a-z0-9])*.{1-12}
 affectation "="
 semicolon ";"
+arc "("
+farc ")"
+vg ","
+debut "{"
+fin "}"
+plus "++"
+minus "--"
+if "if"|"IF"|"If"
+for "for"|"FOR"
+begin "begin"|"BEGIN"
+end "end"|"END"
 
     /*
     Définitions de la partie 
@@ -33,8 +53,6 @@ semicolon ";"
 
     // Affectation
 op "+"|"-"|"*"|"/"
-plus "++"
-minus "--"
 
     // Condition if
 if "if"
