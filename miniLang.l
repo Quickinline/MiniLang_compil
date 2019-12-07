@@ -13,7 +13,7 @@
     // les déclarations
 
 dec "INT"|"FLOAT"|"BOOL"
-chiffre[0-9]
+chiffre [0-9]
 cst [1-9][0-9]*|0
 vide [ \t]+
 saut_ligne [\n]
@@ -30,7 +30,7 @@ const_float "const float" | "CONST FLOAT"
 comment "{"[^}]*"}"
 
     // Déclarations des éléments du language
-idf [A-Z]([_]?[a-z0-9])*.{1-12}
+idf [A-Z]([_]?[a-z0-9])*.{1-11}
 affectation "="
 semicolon ";"
 arc "("
