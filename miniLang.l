@@ -40,8 +40,6 @@ debut "{"
 fin "}"
 plus "++"
 minus "--"
-if "if"|"IF"|"If"
-for "for"|"FOR"
 begin "begin"|"BEGIN"
 end "end"|"END"
 
@@ -55,11 +53,11 @@ end "end"|"END"
 op "+"|"-"|"*"|"/"
 
     // Condition if
-if "if"
+if "if"|"IF"|"If"
 comp "=="|"<"|"<="|"<>"|">"|">="
 
     // For loop
-for "for"
+for "for"|"FOR"
 
     // Common
 paropen "("
