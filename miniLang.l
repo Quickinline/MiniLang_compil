@@ -26,24 +26,21 @@ saut_ligne [\n]
 integer [- | +]?([1-9][0-9]*|0)
 float [- | +]?([1-9][0-9]*|0)\.[0-9]*[1-9]
 bool ("true"|"false"|"TRUE"|"FALSE")
-varint "INT" | "int"
-varfloat "FLOAT" | "float"
-varbool "bool" | "BOOL"
+const "CONST | const"
+varint "INT"|"int"
+varfloat "FLOAT"|"float"
+varbool "bool"|"BOOL"
 const_int "const int"|"CONST INT"
 const_float "const float" | "CONST FLOAT"
 comment "{"[^}]*"}"
 
     // Déclarations des éléments du language
 idf [A-Z]([_]?[a-z0-9])*.{1-11}
-affectation "="
 semicolon ";"
 arc "("
 farc ")"
 vg ","
-pvg ";"
-debut "{"
-fin "}"
-plus "++"
+plus "+""+"
 minus "--"
 begin "begin"|"BEGIN"
 end "end"|"END"
@@ -54,7 +51,6 @@ end "end"|"END"
     qui inclut les instructions du language Minilang
     */
 
-    // Affectation
 op "+"|"-"|"*"|"/"
 
     // Condition if
@@ -73,37 +69,31 @@ curlclose "}"
     // Expression Réfulière { Action C}
 ; {idf}           {if (yyleng <= 12 ){yylval.str=strdup(yytext);nb_col+=yyleng;return(IDF);} else{printf("Erreur le idf est trop long ( max 12 caracteres)\n");}}
 {const_int}       return CONST_INT ;
-{const_float}     return CONST_FLOAT ;
-[ \t] 
-\n                {nb_li++; }
+{const}     return CONST;
+{saut_ligne}    {nb_li++; }
 {op}            { +=yyleng;return(OP);}
 {begin}         {nb_col+=yyleng;return(BEGIN);}
 {end}           {nb_col+=yyleng;return(END);}
-{varint}        {yylval.type=strdup(yytext);nb_col+=yyleng;return(VARINT);}
-{varfloat}      {yylval.type=strdup(yytext);nb_col+=yyleng;return(VARFLOAT);}
-{varbool}       {yylval.type=strdup(yytext);nb_col+=yyleng;return(VARBOOL);}
-{int}           {yylval.entier=atoi(yytext);nb_col+=yyleng;return(INT);}
+{varint}        return VARINT;
+{varfloat}      return VARFLOAT;
+{varbool}       return VARBOOL;
+{integer}       {yylval.entier=atoi(yytext);nb_col+=yyleng;return(INTEGER);}
 {float}         {yylval.reel=atof(yytext);nb_col+=yyleng;return(FLOAT);}
 {bool}          {yylval.bool=strdup(yytext);nb_col+=yyleng;return(BOOL);} 
 {if}            {nb_col+=yyleng;return(IF);}
 {for}           {nb_col+=yyleng;return(FOR);}
-{debut}         {nb_col+=yyleng;retrun (DEBUT);}
-{fin}           {nb_col+=yyleng;return(FIN);}
-{affectation}   {nb_col+=yyleng;retrun(AFFECTATION);}
-{semicolon}     {nb_col+=yyleng;return(SEMICOLON);}
+{semicolon}     {return SEMICOLON;}
 {arc}           {nb_col+=yyleng;return(ARC);}
 {farc}          {nb_col+=yyleng;return(FARC);}
 {vg}            {nb_col+=yyleng;return(VG);}
-{pvg}           {nb_col+=yyleng;return(PVG);}
 {plus}          {nb_col+=yyleng;return(PLUS);}
 {minus}         {nb_col+=yyleng;return(MINUS);}
-{paropen}       {nb_col+=yyleng;return(PAROPEN);}
+{paropen}       {return(PAROPEN);}
 {parclose}      {nb_col+=yyleng;return(PARCLOSE);}
 {curlopen}      {nb_col+=yyleng;return(CURLOPEN);}
 {curlclose}     {nb_col+=yyleng;return(CURLCLOSE);}
 {comment}       {nb_li+=linecount(yytext);}
 {saut_ligne}    {nb_li++;nb_col = 0 ;}
-{.}             {printf("unexpected caracteres\n");}
 
 
 

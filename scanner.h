@@ -5,7 +5,7 @@
 #define VARINT 5
 #define VARFLOAT 6
 #define VARBOOL 7
-#define INT 8
+#define INTEGER 8
 #define FLOAT 9
 #define BOOL 10
 #define IF 11
@@ -17,7 +17,6 @@
 #define ARC 17
 #define FARC 18
 #define VG 19
-#define PVG 20
 #define PLUS 21
 #define MINUS 22
 #define PAROPEN 23
