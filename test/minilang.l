@@ -1,6 +1,6 @@
 %{
     // Définitions en language C
-#include "scanner.h"
+#include "minilang.tab.h"
 %}
 
     // les définitions des expressions régulières
@@ -61,7 +61,6 @@ curlclose "}"
 
 %%
     // Expression Réfulière { Action C}
-
-{paropen} {return yytokentype.PAROPEN;}
+{chiffre} {return token_chiffre;}
 
 %%
