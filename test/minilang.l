@@ -19,6 +19,7 @@ saut_ligne [\n]
 integer [- | +]?([1-9][0-9]*|0)
 float [- | +]?([1-9][0-9]*|0)\.[0-9]*[1-9]
 bool ("true"|"false"|"TRUE"|"FALSE")
+constant integer | float;
 
     // Définitions
 varint "INT"|"int"
@@ -46,7 +47,7 @@ end "end"|"END"
     */
 
     // Affectation
-op "+"|"-"|"*"|"/"
+op "+"|"-"|"*"|"/"|"&&"|"||"
 
     // Condition if
 if "if"|"IF"|"If"
@@ -92,4 +93,5 @@ curlclose "}"
 {parclose} {return token_parclose;}
 {curlopen} {return token_curlopen;}
 {curlclose} {return token_curlclose;}
+{constant} {return token_constant;}
 %%
