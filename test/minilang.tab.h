@@ -61,15 +61,19 @@ extern int yydebug;
     token_minus = 271,
     token_begin = 272,
     token_end = 273,
-    token_op = 274,
-    token_if = 275,
-    token_comp = 276,
-    token_for = 277,
-    token_paropen = 278,
-    token_parclose = 279,
-    token_curlopen = 280,
-    token_curlclose = 281,
-    token_constant = 282
+    token_if = 274,
+    token_comp = 275,
+    token_for = 276,
+    token_paropen = 277,
+    token_parclose = 278,
+    token_curlopen = 279,
+    token_curlclose = 280,
+    token_add = 281,
+    token_sub = 282,
+    token_mult = 283,
+    token_div = 284,
+    token_and = 285,
+    token_or = 286
   };
 #endif
 
@@ -84,7 +88,7 @@ int     entier;
 float reel;
 char*   str;
 
-#line 88 "minilang.tab.h" /* yacc.c:1909  */
+#line 92 "minilang.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

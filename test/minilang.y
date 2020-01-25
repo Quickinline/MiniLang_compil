@@ -29,7 +29,6 @@ char*   str;
 %token <str>token_minus
 %token <str>token_begin
 %token <str>token_end
-%token <str>token_op
 %token <str>token_if
 %token <str>token_comp
 %token <str>token_for
@@ -37,6 +36,14 @@ char*   str;
 %token <str>token_parclose
 %token <str>token_curlopen
 %token <str>token_curlclose
+%token token_add
+%token token_sub
+%token token_mult
+%token token_div
+%token token_and
+%token token_or
+
+
 %start Prog
 %%
 
@@ -74,9 +81,11 @@ Affectation: token_idf token_affectation Exp token_semicolon | Incrementation;
 
 Incrementation: token_idf token_plus | token_idf token_minus;
 
-Exp: token_idf token_op Exp | token_idf | ExpConst;
+OP: token_add | token_sub | token_div | token_mult | token_and | token_or;
 
-ExpConst: token_integer token_op ExpConst | token_float token_op ExpConst | token_bool token_op ExpConst 
+Exp: token_idf OP Exp | token_idf | ExpConst;
+
+ExpConst: token_integer OP ExpConst | token_float OP ExpConst | token_bool OP ExpConst 
 |	token_bool 
 |	token_float;
 |	token_integer;

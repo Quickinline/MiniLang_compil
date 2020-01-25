@@ -18,8 +18,8 @@ vide [ \t]+
 saut_ligne [\n]+
 
     // les Nombres (valeurs)
-integer [- | +]?([1-9][0-9]*|0)
-float [- | +]?([1-9][0-9]*|0)\.[0-9]*[1-9]
+integer ([1-9][0-9]*|0)
+float ([1-9][0-9]*|0)\.[0-9]*[1-9]
 bool "true"|"false"|"TRUE"|"FALSE"
     // Définitions
 varint "INT"|"int"
@@ -87,7 +87,12 @@ comment "{"[^}]*"}"
 {minus} { yylval.str=strdup(yytext); return token_minus;}
 {beginmc} {yylval.str=strdup(yytext);return token_begin;}
 {end} { yylval.str=strdup(yytext); return token_end;}
-{op} { yylval.str=strdup(yytext); return token_op;}
+"\+" {return token_add;}
+"\-" {return token_sub;}
+"\*" {return token_mult;}
+"/" {return token_div;}
+"&&" {return token_and;}
+"\|\|" {return token_or;}
 {if} { yylval.str=strdup(yytext); return token_if;}
 {comp} { yylval.str=strdup(yytext); return token_comp;}
 {for} { yylval.str=strdup(yytext); return token_for;}
