@@ -28,7 +28,9 @@ const "CONST"|"const"
 comment "{"[^}]*"}"
 
     // Déclarations des éléments du language
-idf [A-Z]([_]?[a-z0-9])*.{1-11}
+
+    // IDF à revoir
+idf ([A-Z]([_]?[a-z0-9])*){1,11}
 affectation "="
 semicolon ";"
 vg ","
@@ -62,5 +64,32 @@ curlclose "}"
 %%
     // Expression Réfulière { Action C}
 {chiffre} {return token_chiffre;}
+{vide} {return token_vide;}
+{saut_ligne} {return token_saut_ligne;}
+{integer} { yylval = atoi(yytext); return token_integer;}
+{float} {return token_float;}
+{bool} {return token_bool;}
+{varint} {return token_varint;}
+{varfloat} {return token_varfloat;}
+{varbool} {return token_varbool;}
+{const} {return token_const;}
+{comment} {return token_comment;}
 
+{idf} {return token_idf;}
+
+{affectation} {return token_affectation;}
+{semicolon} {return token_semicolon;}
+{vg} {return token_vg;}
+{plus} {return token_plus;}
+{minus} {return token_minus;}
+{begin} {return token_begin;}
+{end} {return token_end;}
+{op} {return token_op;}
+{if} {return token_if;}
+{comp} {return token_comp;}
+{for} {return token_for;}
+{paropen} {return token_paropen;}
+{parclose} {return token_parclose;}
+{curlopen} {return token_curlopen;}
+{curlclose} {return token_curlclose;}
 %%

@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include "minilang.tab.h"
 int yylex();
 int yyerror(char *s);
 %}
@@ -36,6 +37,13 @@ int yyerror(char *s);
 
 %%
 Cret : token_plus | token_minus
+
+Declaration: token_const token_varint token_idf token_semicolon
+|	token_varint token_idf token_semicolon
+|	token_varfloat token_idf token_semicolon
+|	token_const token_varfloat token_idf token_semicolon
+
+
 ;
 
 %%
