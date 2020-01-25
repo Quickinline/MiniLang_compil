@@ -1,6 +1,8 @@
 %{
     // Définitions en language C
-#include "minilang.tab.h"
+    #include"minilang.tab.h"
+    extern YYSTYPE yylval;
+    extern int nbrligne;
 %}
 
     // les définitions des expressions régulières
@@ -13,31 +15,29 @@
 
 chiffre [0-9]
 vide [ \t]+
-saut_ligne [\n]
+saut_ligne [\n]+
 
     // les Nombres (valeurs)
 integer [- | +]?([1-9][0-9]*|0)
 float [- | +]?([1-9][0-9]*|0)\.[0-9]*[1-9]
-bool ("true"|"false"|"TRUE"|"FALSE")
-constant integer | float;
-
+bool "true"|"false"|"TRUE"|"FALSE"
     // Définitions
 varint "INT"|"int"
 varfloat "FLOAT"|"float"
 varbool "bool"|"BOOL"
 const "CONST"|"const"
-comment "{"[^}]*"}"
+
 
     // Déclarations des éléments du language
 
     // IDF à revoir
-idf ([A-Z]([_]?[a-z0-9])*){1,11}
+
 affectation "="
 semicolon ";"
 vg ","
 plus "++"
 minus "--"
-begin "begin"|"BEGIN"
+beginmc "begin"|"BEGIN"
 end "end"|"END"
 
     /*
@@ -47,7 +47,7 @@ end "end"|"END"
     */
 
     // Affectation
-op "+"|"-"|"*"|"/"|"&&"|"||"
+op "+"|"-"|"*"|"/"|"&&"|"\|\|"
 
     // Condition if
 if "if"|"IF"|"If"
@@ -62,36 +62,38 @@ parclose ")"
 curlopen "{"
 curlclose "}"
 
+idf ([A-Z]([_]?[a-z0-9])*){1,11}
+comment "{"[^}]*"}"
+
 %%
-    // Expression Réfulière { Action C}
-{chiffre} {return token_chiffre;}
-{vide} {return token_vide;}
-{saut_ligne} {return token_saut_ligne;}
-{integer} { yylval = atoi(yytext); return token_integer;}
-{float} {return token_float;}
-{bool} {return token_bool;}
-{varint} {return token_varint;}
-{varfloat} {return token_varfloat;}
-{varbool} {return token_varbool;}
-{const} {return token_const;}
-{comment} {return token_comment;}
+    // Expression Régulière { Action C}
+{vide}
+{saut_ligne} {nbrligne++;}
+{integer} { yylval.entier = atoi(yytext); return token_integer;}
+{float} { yylval.reel = atof(yytext); return token_float;}
+{bool} { yylval.str=strdup(yytext); return token_bool;}
+{varint} { yylval.str=strdup(yytext); return token_varint;}
+{varfloat} { yylval.str=strdup(yytext); return token_varfloat;}
+{varbool} { yylval.str=strdup(yytext); return token_varbool;}
+{const} { yylval.str=strdup(yytext); return token_const;}
+{comment} { yylval.str=strdup(yytext); return token_comment;}
 
-{idf} {return token_idf;}
+{idf} { yylval.str=strdup(yytext); return token_idf;}
 
-{affectation} {return token_affectation;}
-{semicolon} {return token_semicolon;}
-{vg} {return token_vg;}
-{plus} {return token_plus;}
-{minus} {return token_minus;}
-{begin} {return token_begin;}
-{end} {return token_end;}
-{op} {return token_op;}
-{if} {return token_if;}
-{comp} {return token_comp;}
-{for} {return token_for;}
-{paropen} {return token_paropen;}
-{parclose} {return token_parclose;}
-{curlopen} {return token_curlopen;}
-{curlclose} {return token_curlclose;}
-{constant} {return token_constant;}
+{affectation} { yylval.str=strdup(yytext); return token_affectation;}
+{semicolon} { yylval.str=strdup(yytext); return token_semicolon;}
+{vg} { yylval.str=strdup(yytext);  return token_vg;}
+{plus} { yylval.str=strdup(yytext); return token_plus;}
+{minus} { yylval.str=strdup(yytext); return token_minus;}
+{beginmc} {yylval.str=strdup(yytext);return token_begin;}
+{end} { yylval.str=strdup(yytext); return token_end;}
+{op} { yylval.str=strdup(yytext); return token_op;}
+{if} { yylval.str=strdup(yytext); return token_if;}
+{comp} { yylval.str=strdup(yytext); return token_comp;}
+{for} { yylval.str=strdup(yytext); return token_for;}
+{paropen} { yylval.str=strdup(yytext); return token_paropen;}
+{parclose} { yylval.str=strdup(yytext); return token_parclose;}
+{curlopen} { yylval.str=strdup(yytext); return token_curlopen;}
+{curlclose} { yylval.str=strdup(yytext); return token_curlclose;}
+. {printf("\nErreur lexicale a la ligne %d ",nbrligne);}
 %%

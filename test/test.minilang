@@ -1,0 +1,5 @@
+int Abc;
+begin
+Abc=12;
+Bcc=15*12-8;
+end

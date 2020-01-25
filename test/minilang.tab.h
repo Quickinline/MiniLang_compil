@@ -45,40 +45,49 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    token_chiffre = 258,
-    token_vide = 259,
-    token_saut_ligne = 260,
-    token_integer = 261,
-    token_float = 262,
-    token_bool = 263,
-    token_varint = 264,
-    token_varfloat = 265,
-    token_varbool = 266,
-    token_const = 267,
-    token_comment = 268,
-    token_idf = 269,
-    token_affectation = 270,
-    token_semicolon = 271,
-    token_vg = 272,
-    token_plus = 273,
-    token_minus = 274,
-    token_begin = 275,
-    token_end = 276,
-    token_op = 277,
-    token_if = 278,
-    token_comp = 279,
-    token_for = 280,
-    token_paropen = 281,
-    token_parclose = 282,
-    token_curlopen = 283,
-    token_curlclose = 284,
-    token_constant = 285
+    token_integer = 258,
+    token_float = 259,
+    token_bool = 260,
+    token_varint = 261,
+    token_varfloat = 262,
+    token_varbool = 263,
+    token_const = 264,
+    token_comment = 265,
+    token_idf = 266,
+    token_affectation = 267,
+    token_semicolon = 268,
+    token_vg = 269,
+    token_plus = 270,
+    token_minus = 271,
+    token_begin = 272,
+    token_end = 273,
+    token_op = 274,
+    token_if = 275,
+    token_comp = 276,
+    token_for = 277,
+    token_paropen = 278,
+    token_parclose = 279,
+    token_curlopen = 280,
+    token_curlclose = 281,
+    token_constant = 282
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 9 "minilang.y" /* yacc.c:1909  */
+
+int     entier;
+float reel;
+char*   str;
+
+#line 88 "minilang.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
