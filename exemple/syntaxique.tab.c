@@ -95,10 +95,7 @@ char value [100] ;
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "syntaxique.tab.h".  */
-#ifndef YY_YY_SYNTAXIQUE_TAB_H_INCLUDED
-# define YY_YY_SYNTAXIQUE_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -158,7 +155,7 @@ char* idf;
 char symbol;
 char* bool;
 
-#line 162 "syntaxique.tab.c" /* yacc.c:355  */
+#line 159 "syntaxique.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -171,11 +168,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SYNTAXIQUE_TAB_H_INCLUDED  */
+
 
 /* Copy the second part of user declarations.  */
 
-#line 179 "syntaxique.tab.c" /* yacc.c:358  */
+#line 176 "syntaxique.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1322,38 +1319,38 @@ yyreduce:
         case 2:
 #line 41 "syntaxique.y" /* yacc.c:1646  */
     {printf("Debut du programme...\n");}
-#line 1326 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1323 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 41 "syntaxique.y" /* yacc.c:1646  */
     {
  printf("FIN DU PROGRAMME\n Programme syntaxiquement correcte!  \n "); YYACCEPT; }
-#line 1333 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1330 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 45 "syntaxique.y" /* yacc.c:1646  */
     {strcpy(suavType,(yyvsp[0].type))}
-#line 1339 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1336 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 45 "syntaxique.y" /* yacc.c:1646  */
     {strcpy(suavType,(yyvsp[0].type))}
-#line 1345 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1342 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 45 "syntaxique.y" /* yacc.c:1646  */
     {strcpy(suavType,(yyvsp[0].type))}
-#line 1351 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1348 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 55 "syntaxique.y" /* yacc.c:1646  */
     {if (recherche((yyvsp[0].idf)) != -1){printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d , l'idf %s existe déjà\n",nb_ligne,nb_colonne,(yyvsp[0].idf));}else { inserer((yyvsp[0].idf),"idf",suavType,"non") ;} }
-#line 1357 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1354 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
@@ -1365,7 +1362,7 @@ yyreduce:
  	}
  	else { inserer((yyvsp[0].idf),"idf","CONST INT","oui") ;
  	} }
-#line 1369 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1366 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
@@ -1377,25 +1374,25 @@ yyreduce:
  	}
  	else { inserer((yyvsp[0].idf),"idf","CONST FLOAT","oui") ;
  	} }
-#line 1381 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1378 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 82 "syntaxique.y" /* yacc.c:1646  */
     { test=(yyvsp[0].reel); strcpy(value,"FLOAT");}
-#line 1387 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1384 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 82 "syntaxique.y" /* yacc.c:1646  */
     { test=(yyvsp[0].entier);strcpy(value,"INT");}
-#line 1393 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1390 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 82 "syntaxique.y" /* yacc.c:1646  */
     {strcpy(value,"BOOL");}
-#line 1399 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1396 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
@@ -1404,13 +1401,13 @@ yyreduce:
    if (recherche((yyvsp[-3].idf)) == -1){
        printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d, la variable %s n'est pas déclarée\n",nb_ligne,nb_colonne,(yyvsp[-3].idf));
    } }
-#line 1408 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1405 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 92 "syntaxique.y" /* yacc.c:1646  */
     {if((yyvsp[0].entier) == 0){printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d, division sur 0\n",nb_ligne,nb_colonne);}}
-#line 1414 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1411 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
@@ -1430,7 +1427,7 @@ yyreduce:
    if (strcmp(typeIDF((yyvsp[-3].idf)),"FLOAT") == 0 && strcmp(value,"BOOL") == 0 ){printf("ERREUR dans la ligne %d colonne %d, Type d'affectation incorrect (entier ou reel attendue)\n",nb_ligne,nb_colonne);}  
 
 }
-#line 1434 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1431 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -1439,7 +1436,7 @@ yyreduce:
 if(strcmp(typeIDF((yyvsp[-3].idf)),typeIDF((yyvsp[-1].idf)))!=0) {
    printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d, Type d'affectation incorrect (%s attendue)\n",nb_ligne,nb_colonne,typeIDF((yyvsp[-3].idf))); } 
    }
-#line 1443 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1440 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
@@ -1454,7 +1451,7 @@ if(strcmp(typeIDF((yyvsp[-3].idf)),typeIDF((yyvsp[-1].idf)))!=0) {
            printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d,Mauvaise affectation de la constante ( %s attendue )\n",nb_ligne,nb_colonne,suavType);
  	}
  	else { inserer((yyvsp[-4].idf),"idf","CONST INT","oui") ;} }
-#line 1458 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1455 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
@@ -1468,7 +1465,7 @@ if(strcmp(typeIDF((yyvsp[-3].idf)),typeIDF((yyvsp[-1].idf)))!=0) {
            printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d,mauvaise affectation de la constante ( %s attendue )\n",nb_ligne,nb_colonne,suavType);
  	}
  	else { inserer((yyvsp[-5].idf),"idf","CONST FLOAT","oui") ;} }
-#line 1472 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1469 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
@@ -1476,7 +1473,7 @@ if(strcmp(typeIDF((yyvsp[-3].idf)),typeIDF((yyvsp[-1].idf)))!=0) {
     {   if (recherche((yyvsp[-2].idf)) == -1)
        printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d, la variable %s n'est pas déclarée\n",nb_ligne,nb_colonne,(yyvsp[-2].idf));
 }
-#line 1480 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1477 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
@@ -1484,11 +1481,11 @@ if(strcmp(typeIDF((yyvsp[-3].idf)),typeIDF((yyvsp[-1].idf)))!=0) {
     {   if (recherche((yyvsp[-1].idf)) == -1)
        printf("ERREUR SÉMANTIQUE dans la ligne %d colonne %d, la variable %s n'est pas déclarée\n",nb_ligne,nb_colonne,(yyvsp[-1].idf));
 }
-#line 1488 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1485 "syntaxique.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1492 "syntaxique.tab.c" /* yacc.c:1646  */
+#line 1489 "syntaxique.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

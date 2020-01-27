@@ -34,7 +34,7 @@
 # define YY_YY_MINILANG_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -52,28 +52,27 @@ extern int yydebug;
     token_varfloat = 262,
     token_varbool = 263,
     token_const = 264,
-    token_comment = 265,
-    token_idf = 266,
-    token_affectation = 267,
-    token_semicolon = 268,
-    token_vg = 269,
-    token_plus = 270,
-    token_minus = 271,
-    token_begin = 272,
-    token_end = 273,
-    token_if = 274,
-    token_comp = 275,
-    token_for = 276,
-    token_paropen = 277,
-    token_parclose = 278,
-    token_curlopen = 279,
-    token_curlclose = 280,
-    token_add = 281,
-    token_sub = 282,
-    token_mult = 283,
-    token_div = 284,
-    token_and = 285,
-    token_or = 286
+    token_idf = 265,
+    token_affectation = 266,
+    token_semicolon = 267,
+    token_vg = 268,
+    token_plus = 269,
+    token_minus = 270,
+    token_begin = 271,
+    token_end = 272,
+    token_if = 273,
+    token_comp = 274,
+    token_for = 275,
+    token_paropen = 276,
+    token_parclose = 277,
+    token_curlopen = 278,
+    token_curlclose = 279,
+    token_add = 280,
+    token_sub = 281,
+    token_mult = 282,
+    token_div = 283,
+    token_and = 284,
+    token_or = 285
   };
 #endif
 
@@ -82,13 +81,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 9 "minilang.y" /* yacc.c:1909  */
+#line 10 "minilang.y" /* yacc.c:1909  */
 
 int     entier;
 float reel;
 char*   str;
 
-#line 92 "minilang.tab.h" /* yacc.c:1909  */
+#line 91 "minilang.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

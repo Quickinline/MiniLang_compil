@@ -1,7 +1,8 @@
 %{
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 int nbrligne=1;
+int nbrcol=0;
 int yylex();
 void yyerror(const char *s);
 %}
@@ -20,7 +21,6 @@ char*   str;
 %token <str>token_varfloat
 %token <str>token_varbool
 %token <str>token_const
-%token <str>token_comment
 %token <str>token_idf
 %token <str>token_affectation
 %token <str>token_semicolon
@@ -32,10 +32,10 @@ char*   str;
 %token <str>token_if
 %token <str>token_comp
 %token <str>token_for
-%token <str>token_paropen
-%token <str>token_parclose
-%token <str>token_curlopen
-%token <str>token_curlclose
+%token token_paropen
+%token token_parclose
+%token token_curlopen
+%token token_curlclose
 %token token_add
 %token token_sub
 %token token_mult
@@ -47,9 +47,9 @@ char*   str;
 %start Prog
 %%
 
-Prog: DecList token_begin InstList token_end {YYACCEPT;}| token_begin token_end | {printf("\nprogramme vide");};
+Prog: DecList token_begin InstList token_end | token_begin token_end;
 
-DecList: Declaration DecList|Declaration | token_comment DecList | token_comment ;
+DecList: Declaration DecList|Declaration;
 
 Declaration: ConstIntDec | ConstFloatDec | ConstBoolDec | IntDec | FloatDec | BoolDec;
 
@@ -73,20 +73,24 @@ MultiIdfBool: token_idf token_vg MultiIdfBool | token_idf | token_idf token_affe
 |	token_idf token_affectation token_bool;
 
 
-InstList: Instruction InstList | Instruction | token_comment InstList | token_comment;
+InstList: Instruction InstList | Instruction;
 
-Instruction: Boucle | Affectation | Condition;
+Instruction: Boucle | Affectation token_semicolon | Condition | ;
 
-Affectation: token_idf token_affectation Exp token_semicolon | Incrementation;
+Affectation: token_idf  token_affectation Exp | Incrementation;
 
 Incrementation: token_idf token_plus | token_idf token_minus;
 
 OP: token_add | token_sub | token_div | token_mult | token_and | token_or;
 
-Exp: token_idf OP Exp | token_idf | ExpConst;
+Exp: token_idf OP Exp
+|	token_idf 
+|	ExpConst OP Exp 
+|	ExpConst
+|	token_paropen token_idf OP Exp token_parclose;
+|	token_paropen ExpConst OP Exp token_parclose;
 
-ExpConst: token_integer OP ExpConst | token_float OP ExpConst | token_bool OP ExpConst 
-|	token_bool 
+ExpConst: token_bool 
 |	token_float;
 |	token_integer;
 
@@ -105,7 +109,7 @@ ExpCond: token_idf token_comp token_idf
 |	token_bool token_comp token_bool
 |	token_bool;
 
-Boucle: token_for token_paropen Affectation token_vg ExpCond token_vg Incrementation token_parclose token_curlopen InstList token_curlclose;
+Boucle: token_for token_paropen Affectation token_vg ExpCond token_vg Incrementation token_parclose token_curlopen  InstList token_curlclose;
 
 
 
@@ -119,11 +123,14 @@ Boucle: token_for token_paropen Affectation token_vg ExpCond token_vg Incrementa
 
 #include"lex.yy.c"
 int main() {
+	#if YYDEBUG
+	yydebug = 1;
+	#endif
 	yyparse();
 	return yylex();
 }
 
-void yyerror(const char *s){ printf("\nERROR %d\n",nbrligne); }
+void yyerror(const char *s){ printf("\nerreur syntaxique ligne %d et colonne %d\n",nbrligne,nbrcol); }
 int yywrap(){ return 1; }
 
 // int yywrap(void){

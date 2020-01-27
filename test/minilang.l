@@ -3,6 +3,7 @@
     #include"minilang.tab.h"
     extern YYSTYPE yylval;
     extern int nbrligne;
+    extern int nbrcol;
 %}
 
     // les définitions des expressions régulières
@@ -18,7 +19,7 @@ vide [ \t]+
 saut_ligne [\n]+
 
     // les Nombres (valeurs)
-integer ([1-9][0-9]*|0)
+integer ([1-9][0-9]*|0){1,11}
 float ([1-9][0-9]*|0)\.[0-9]*[1-9]
 bool "true"|"false"|"TRUE"|"FALSE"
     // Définitions
@@ -31,7 +32,7 @@ const "CONST"|"const"
     // Déclarations des éléments du language
 
     // IDF à revoir
-
+comp "=="|"<"|"<="|"<>"|">"|">="
 affectation "="
 semicolon ";"
 vg ","
@@ -51,54 +52,54 @@ op "+"|"-"|"*"|"/"|"&&"|"\|\|"
 
     // Condition if
 if "if"|"IF"|"If"
-comp "=="|"<"|"<="|"<>"|">"|">="
 
     // For loop
 for "for"|"FOR"
 
     // Common
-paropen "("
-parclose ")"
-curlopen "{"
-curlclose "}"
-
+paropen "\("
+parclose "\)"
+curlopen "\{"
+curlclose "\}"
+Ac "{"
 idf ([A-Z]([_]?[a-z0-9])*){1,11}
-comment "{"[^}]*"}"
+comment "*{"[^}]*"}*"
 
 %%
     // Expression Régulière { Action C}
-{vide}
-{saut_ligne} {nbrligne++;}
-{integer} { yylval.entier = atoi(yytext); return token_integer;}
-{float} { yylval.reel = atof(yytext); return token_float;}
-{bool} { yylval.str=strdup(yytext); return token_bool;}
-{varint} { yylval.str=strdup(yytext); return token_varint;}
-{varfloat} { yylval.str=strdup(yytext); return token_varfloat;}
-{varbool} { yylval.str=strdup(yytext); return token_varbool;}
-{const} { yylval.str=strdup(yytext); return token_const;}
-{comment} { yylval.str=strdup(yytext); return token_comment;}
+{vide} {nbrcol+=yyleng;}
+{saut_ligne} {nbrligne++;nbrcol=0;}
+{integer} {nbrcol+=yyleng; yylval.entier = atoi(yytext);return token_integer;}
+{float} { nbrcol+=yyleng; yylval.reel = atof(yytext); return token_float;}
+{bool} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_bool;}
+{varint} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_varint;}
+{varfloat} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_varfloat;}
+{varbool} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_varbool;}
+{const} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_const;}
+{comment} { nbrcol+=yyleng; }
 
-{idf} { yylval.str=strdup(yytext); return token_idf;}
+{idf} { nbrcol+=yyleng; if(yyleng <= 12){yylval.entier = atoi(yytext);return token_idf;}else{printf("\nErreur IDF trop long\n");}}
 
-{affectation} { yylval.str=strdup(yytext); return token_affectation;}
-{semicolon} { yylval.str=strdup(yytext); return token_semicolon;}
-{vg} { yylval.str=strdup(yytext);  return token_vg;}
-{plus} { yylval.str=strdup(yytext); return token_plus;}
-{minus} { yylval.str=strdup(yytext); return token_minus;}
-{beginmc} {yylval.str=strdup(yytext);return token_begin;}
-{end} { yylval.str=strdup(yytext); return token_end;}
-"\+" {return token_add;}
-"\-" {return token_sub;}
-"\*" {return token_mult;}
-"/" {return token_div;}
-"&&" {return token_and;}
-"\|\|" {return token_or;}
-{if} { yylval.str=strdup(yytext); return token_if;}
-{comp} { yylval.str=strdup(yytext); return token_comp;}
-{for} { yylval.str=strdup(yytext); return token_for;}
-{paropen} { yylval.str=strdup(yytext); return token_paropen;}
-{parclose} { yylval.str=strdup(yytext); return token_parclose;}
-{curlopen} { yylval.str=strdup(yytext); return token_curlopen;}
-{curlclose} { yylval.str=strdup(yytext); return token_curlclose;}
-. {printf("\nErreur lexicale a la ligne %d ",nbrligne);}
+{affectation} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_affectation;}
+{semicolon} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_semicolon;}
+{vg} { nbrcol+=yyleng; yylval.str=strdup(yytext);  return token_vg;}
+{plus} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_plus;}
+{minus} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_minus;}
+{beginmc} { nbrcol+=yyleng; yylval.str=strdup(yytext);return token_begin;}
+{end} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_end;}
+{Ac} { nbrcol+=yyleng; return token_curlopen;}
+{if} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_if;}
+{comp} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_comp;}
+{for} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_for;}
+"+" {nbrcol+=yyleng; return token_add;}
+"-" {nbrcol+=yyleng; return token_sub;}
+"*" {nbrcol+=yyleng; return token_mult;}
+"/" {nbrcol+=yyleng; return token_div;}
+"&&" {nbrcol+=yyleng; return token_and;}
+"||" {nbrcol+=yyleng; return token_or;}
+"(" {nbrcol+=yyleng; return token_paropen;}
+")" {nbrcol+=yyleng; return token_parclose;}
+"}" {nbrcol+=yyleng; return token_curlclose;}
+
+. {printf("\nErreur lexicale a la ligne %d et la colonne %d ",nbrligne, nbrcol);}
 %%
