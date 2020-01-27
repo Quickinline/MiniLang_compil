@@ -87,27 +87,16 @@ Exp: token_idf OP Exp
 |	token_idf 
 |	ExpConst OP Exp 
 |	ExpConst
-|	token_paropen token_idf OP Exp token_parclose;
+|	token_paropen token_idf OP Exp token_parclose
 |	token_paropen ExpConst OP Exp token_parclose;
 
 ExpConst: token_bool 
 |	token_float;
 |	token_integer;
 
-
 Condition: token_if token_paropen ExpCond token_parclose token_curlopen InstList token_curlclose;
 
-ExpCond: token_idf token_comp token_idf 
-|	token_idf token_comp token_integer
-|	token_idf token_comp token_float
-|	token_idf token_comp token_bool
-|	token_integer token_comp token_idf
-|	token_float token_comp token_idf
-|	token_bool token_comp token_idf
-|	token_integer token_comp token_integer
-|	token_float token_comp token_float
-|	token_bool token_comp token_bool
-|	token_bool;
+ExpCond: Exp token_comp Exp;
 
 Boucle: token_for token_paropen Affectation token_vg ExpCond token_vg Incrementation token_parclose token_curlopen  InstList token_curlclose;
 

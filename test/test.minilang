@@ -1,16 +1,6 @@
-int Arcccccccc;
+int Arccccccc;
 begin
-for(Arc=0,Arc==0,Arc++)
-{
-	for(Test=5+6,Test<7,Test++){
-		
-	}
-
-	if(Te < Tz){
-		if(T4 && Arc){
-
-		}
-	}
+for(Arc=0,Arc<10,Arc++){
+	
 }
-Art=0;
 end

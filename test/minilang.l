@@ -78,7 +78,7 @@ comment "*{"[^}]*"}*"
 {const} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_const;}
 {comment} { nbrcol+=yyleng; }
 
-{idf} { nbrcol+=yyleng; if(yyleng <= 12){yylval.entier = atoi(yytext);return token_idf;}else{printf("\nErreur IDF trop long\n");}}
+{idf} { nbrcol+=yyleng; if(yyleng < 12){yylval.entier = atoi(yytext);return token_idf;}else{printf("\nErreur lexicale: IDF trop long\n");}}
 
 {affectation} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_affectation;}
 {semicolon} { nbrcol+=yyleng; yylval.str=strdup(yytext); return token_semicolon;}
@@ -95,7 +95,7 @@ comment "*{"[^}]*"}*"
 "-" {nbrcol+=yyleng; return token_sub;}
 "*" {nbrcol+=yyleng; return token_mult;}
 "/" {nbrcol+=yyleng; return token_div;}
-"&&" {nbrcol+=yyleng; return token_and;}
+"&" {nbrcol+=yyleng; return token_and;}
 "||" {nbrcol+=yyleng; return token_or;}
 "(" {nbrcol+=yyleng; return token_paropen;}
 ")" {nbrcol+=yyleng; return token_parclose;}
