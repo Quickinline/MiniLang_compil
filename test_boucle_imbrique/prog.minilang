@@ -1,0 +1,8 @@
+int Var,Var2;
+begin
+for(Var=0,Var<10,Var++){
+	for(Var2=5,Var2 < 15,Var2++){
+        
+    }
+}
+end

@@ -1,0 +1,10 @@
+int Var=0;
+begin
+*{ ici on va tester la condition}*
+if(Var >  5){
+    Var++;
+    if(Var < 26){
+        
+    }
+}
+end
